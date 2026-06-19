@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cautis Architecture Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem;
+      color: white;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { margin-bottom: 2rem; }
+    .header-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .pulse-dot {
+      width: 12px; height: 12px;
+      background: #34d399;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+    .subtitle { color: #94a3b8; font-size: 0.875rem; margin-left: 1.75rem; }
+    .diagram-container {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 1rem;
+      border: 1px solid #1e293b;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    svg { width: 100%; min-width: 1000px; display: block; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+    }
+    .card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .card-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.violet { background: #a78bfa; }
+    .card-dot.amber { background: #fbbf24; }
+    .card-dot.rose { background: #fb7185; }
+    .card-dot.orange { background: #fb923c; }
+    .card h3 { font-size: 0.875rem; font-weight: 600; }
+    .card ul { list-style: none; color: #94a3b8; font-size: 0.75rem; }
+    .card li { margin-bottom: 0.375rem; }
+    .footer { text-align: center; margin-top: 1.5rem; color: #475569; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>Cautis — Guardian Protocol Architecture</h1>
+      </div>
+      <p class="subtitle">On-chain AI agent monitoring and real-time anomaly detection on Casper Network</p>
+    </div>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1100 720">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+          </marker>
+          <marker id="arrowhead-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee" />
+          </marker>
+          <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+          </marker>
+          <marker id="arrowhead-rose" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+          </marker>
+          <marker id="arrowhead-amber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+          </marker>
+          <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fb923c" />
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+
+        <!-- Background Grid -->
+        <rect width="100%" height="100%" fill="url(#grid)" />
+
+        <!-- Arrows (drawn early, behind components) -->
+
+        <!-- AI Agents -> Cautis API -->
+        <line x1="140" y1="185" x2="398" y2="185" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead-cyan)"/>
+        <text x="260" y="178" fill="#22d3ee" font-size="9" text-anchor="middle">tx broadcast</text>
+
+        <!-- Cautis API -> Cautis Guardian Contract (freeze/unfreeze) -->
+        <line x1="470" y1="430" x2="470" y2="498" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrowhead-rose)"/>
+        <text x="482" y="470" fill="#fb7185" font-size="8">freeze</text>
+
+        <!-- Cautis API -> CSPR.cloud (query blockchain) -->
+        <line x1="540" y1="215" x2="758" y2="215" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead-amber)"/>
+        <text x="650" y="208" fill="#fbbf24" font-size="9" text-anchor="middle">query state</text>
+
+        <!-- Cautis API -> Guardian AI (Claude) -->
+        <line x1="410" y1="185" x2="410" y2="118" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+        <text x="422" y="148" fill="#34d399" font-size="8">analyze</text>
+
+        <!-- Guardian AI -> Cautis API (decision) -->
+        <line x1="350" y1="92" x2="350" y2="46" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+        <text x="295" y="66" fill="#34d399" font-size="8">decision</text>
+
+        <!-- CSPR.cloud -> Casper Testnet (reads from) -->
+        <line x1="830" y1="250" x2="830" y2="538" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead-amber)"/>
+        <text x="845" y="400" fill="#fbbf24" font-size="8">indexes</text>
+
+        <!-- x402 -> Cautis API (payment verification) -->
+        <line x1="870" y1="575" x2="540" y2="380" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead-orange)"/>
+        <text x="730" y="487" fill="#fb923c" font-size="8">verify</text>
+
+        <!-- =========================================
+             Region: Casper Network
+             ========================================= -->
+        <rect x="380" y="340" width="680" height="340" rx="12" fill="rgba(251, 191, 36, 0.05)" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="395" y="360" fill="#fbbf24" font-size="10" font-weight="600">Casper Network — Testnet</text>
+
+        <!-- =========================================
+             AI Agents Layer
+             ========================================= -->
+        <!-- Agent 1 -->
+        <rect x="40" y="110" width="170" height="70" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="125" y="135" fill="white" font-size="11" font-weight="600" text-anchor="middle">Yield Scout Alpha</text>
+        <text x="125" y="152" fill="#94a3b8" font-size="8" text-anchor="middle">DeFi yield optimizer</text>
+        <text x="125" y="168" fill="#22d3ee" font-size="7" text-anchor="middle">stake: 50 CSPR</text>
+
+        <!-- Agent 2 -->
+        <rect x="40" y="200" width="170" height="70" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="125" y="225" fill="white" font-size="11" font-weight="600" text-anchor="middle">Liquidity Manager</text>
+        <text x="125" y="242" fill="#94a3b8" font-size="8" text-anchor="middle">AMM liquidity provider</text>
+        <text x="125" y="258" fill="#22d3ee" font-size="7" text-anchor="middle">stake: 100 CSPR</text>
+
+        <!-- Agent 3 -->
+        <rect x="40" y="290" width="170" height="70" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="125" y="315" fill="white" font-size="11" font-weight="600" text-anchor="middle">Arbitrage Sweeper</text>
+        <text x="125" y="332" fill="#94a3b8" font-size="8" text-anchor="middle">Cross-DEX arbitrage</text>
+        <text x="125" y="348" fill="#22d3ee" font-size="7" text-anchor="middle">stake: 25 CSPR</text>
+
+        <!-- =========================================
+             Cautis Guard Protocol (Backend)
+             ========================================= -->
+        <rect x="380" y="140" width="180" height="90" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="470" y="168" fill="white" font-size="12" font-weight="600" text-anchor="middle">Cautis Guardian API</text>
+        <text x="470" y="186" fill="#94a3b8" font-size="9" text-anchor="middle">Next.js 16 · TypeScript</text>
+        <text x="470" y="202" fill="#94a3b8" font-size="8" text-anchor="middle">/api/monitor · /api/agents</text>
+        <text x="470" y="220" fill="#34d399" font-size="7" text-anchor="middle">localhost:3000</text>
+
+        <!-- =========================================
+             Guardian AI (Claude)
+             ========================================= -->
+        <rect x="380" y="40" width="180" height="70" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="470" y="65" fill="white" font-size="11" font-weight="600" text-anchor="middle">Guardian AI Engine</text>
+        <text x="470" y="82" fill="#94a3b8" font-size="9" text-anchor="middle">Claude Sonnet 4</text>
+        <text x="470" y="100" fill="#a78bfa" font-size="7" text-anchor="middle">anomaly detection</text>
+
+        <!-- =========================================
+             CSPR.cloud
+             ========================================= -->
+        <rect x="780" y="190" width="160" height="70" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="860" y="215" fill="white" font-size="11" font-weight="600" text-anchor="middle">CSPR.cloud</text>
+        <text x="860" y="232" fill="#94a3b8" font-size="9" text-anchor="middle">Blockchain Indexer</text>
+        <text x="860" y="252" fill="#fbbf24" font-size="7" text-anchor="middle">REST API · events</text>
+
+        <!-- =========================================
+             Cautis Guardian Contract (Security)
+             ========================================= -->
+        <rect x="400" y="500" width="260" height="120" rx="8" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="530" y="528" fill="white" font-size="12" font-weight="600" text-anchor="middle">Cautis Guardian Contract</text>
+        <text x="530" y="548" fill="#94a3b8" font-size="9" text-anchor="middle">Odra · Rust · WASM</text>
+        <text x="530" y="566" fill="#94a3b8" font-size="8" text-anchor="middle">register_agent · stake · freeze</text>
+        <text x="530" y="582" fill="#94a3b8" font-size="8" text-anchor="middle">unfreeze_agent · set_daily_limit</text>
+        <text x="530" y="598" fill="#94a3b8" font-size="8" text-anchor="middle">get_agent · is_frozen</text>
+        <text x="530" y="614" fill="#fb7185" font-size="7" text-anchor="middle">on-chain · immutable</text>
+
+        <!-- =========================================
+             x402 Facilitator
+             ========================================= -->
+        <rect x="800" y="555" width="160" height="65" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+        <text x="880" y="580" fill="white" font-size="11" font-weight="600" text-anchor="middle">x402 Facilitator</text>
+        <text x="880" y="598" fill="#94a3b8" font-size="9" text-anchor="middle">Payment Settlement</text>
+        <text x="880" y="614" fill="#fb923c" font-size="7" text-anchor="middle">verify · settle</text>
+
+        <!-- =========================================
+             Legend
+             ========================================= -->
+        <text x="40" y="440" fill="white" font-size="10" font-weight="600">Legend</text>
+
+        <rect x="40" y="452" width="16" height="10" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="62" y="460" fill="#94a3b8" font-size="8">AI Agent</text>
+
+        <rect x="40" y="468" width="16" height="10" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1"/>
+        <text x="62" y="476" fill="#94a3b8" font-size="8">Backend API</text>
+
+        <rect x="40" y="484" width="16" height="10" rx="2" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1"/>
+        <text x="62" y="492" fill="#94a3b8" font-size="8">Smart Contract</text>
+
+        <rect x="40" y="500" width="16" height="10" rx="2" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1"/>
+        <text x="62" y="508" fill="#94a3b8" font-size="8">Blockchain Data</text>
+
+        <rect x="40" y="516" width="16" height="10" rx="2" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1"/>
+        <text x="62" y="524" fill="#94a3b8" font-size="8">AI / External</text>
+
+        <rect x="40" y="532" width="16" height="10" rx="2" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1"/>
+        <text x="62" y="540" fill="#94a3b8" font-size="8">Payment</text>
+
+        <rect x="40" y="550" width="16" height="10" rx="2" fill="transparent" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="62" y="558" fill="#94a3b8" font-size="8">Network Boundary</text>
+
+      </svg>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot rose"></div>
+          <h3>Contract Entry Points</h3>
+        </div>
+        <ul>
+          <li>register_agent — stake min 10 CSPR</li>
+          <li>freeze_agent — owner-only lockdown</li>
+          <li>unfreeze_agent — owner-only restore</li>
+          <li>stake — add security deposit</li>
+          <li>set_daily_limit — per-agent caps</li>
+          <li>get_agent / is_frozen — read-only</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot emerald"></div>
+          <h3>Guardian Decision Flow</h3>
+        </div>
+        <ul>
+          <li>Agent submits tx via Cautis API</li>
+          <li>Guardian AI (Claude) analyzes context</li>
+          <li>Hard rules: daily limit exceeded</li>
+          <li>Pattern analysis: anomaly detection</li>
+          <li>Decision: allow | flag | freeze</li>
+          <li>Freeze → on-chain contract call</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot amber"></div>
+          <h3>Infrastructure</h3>
+        </div>
+        <ul>
+          <li>Smart Contract: Odra 2.8.1 · Rust</li>
+          <li>Backend: Next.js 16 · Edge Runtime</li>
+          <li>AI: Claude Sonnet 4 · Anthropic</li>
+          <li>Data: CSPR.cloud Indexer</li>
+          <li>Payments: x402 Protocol</li>
+          <li>Network: Casper Testnet</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer">
+      Cautis · Casper Agentic Buildathon 2026 · mystiquemide/cautis
+    </p>
+  </div>
+</body>
+</html>
